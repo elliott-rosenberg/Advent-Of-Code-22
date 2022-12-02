@@ -27,7 +27,6 @@ for line in lines:
 
 calsList = sorted(calsList, reverse=True)
 print(calsList)
-
 print(calsList[1] + calsList[2] + calsList[3])
 
 
