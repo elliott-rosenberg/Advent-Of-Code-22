@@ -77,17 +77,26 @@ def populateGrid(info):
     # for y in minSteps:
     #     print(y)
     
-    return (minSteps[starting[0]][starting[1]])
+    return minSteps
 
 
     
 
 
 def solvePart1(file):
-    return populateGrid(file)
+    starting = file[1]
+    minSteps = populateGrid(file)
+    return (minSteps[starting[0]][starting[1]])
 
 def solvePart2(file):
-    return True
+    minSteps = populateGrid(file)
+    startingSpots = []
+    grid = file[0]
+    for row, line in enumerate(grid):
+        for col, x in enumerate(line):
+            if x == 1:
+                startingSpots.append(minSteps[row][col])
+    return min(startingSpots)
 
 
 def solve(file):
