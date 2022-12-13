@@ -79,10 +79,6 @@ def populateGrid(info):
     
     return minSteps
 
-
-    
-
-
 def solvePart1(file):
     starting = file[1]
     minSteps = populateGrid(file)
