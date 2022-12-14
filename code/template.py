@@ -14,3 +14,7 @@ def solve(file):
     print(f"Part 2: {solvePart2(process(file))}")
 
 solve("input/11/input1.txt")
+
+
+# 2D array:
+# [[0]*3 for i in range(3)]
