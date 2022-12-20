@@ -1,120 +1,120 @@
-# class Valve:
-#     def __init__(self, start, flow, nexts, isOpened):
-#         self.name = start
-#         self.flowRate = flow
-#         self.next = nexts
-#         self.isOpened = isOpened
+class Valve:
+    def __init__(self, start, flow, nexts, isOpened):
+        self.name = start
+        self.flowRate = flow
+        self.next = nexts
+        self.isOpened = isOpened
 
-#     def getNexts(self):
-#         return self.next
+    def getNexts(self):
+        return self.next
 
-#     def setValve(self, opened):
-#         self.isOpened = opened
+    def setValve(self, opened):
+        self.isOpened = opened
     
-#     def checkOpen(self):
-#         return self.isOpened
+    def checkOpen(self):
+        return self.isOpened
 
-#     def getFlow(self):
-#         return self.flowRate
+    def getFlow(self):
+        return self.flowRate
 
-#     def getName(self):
-#         return self.name
+    def getName(self):
+        return self.name
     
 
 
 
-# def process(file):
-#     lines = [l.strip() for l in open(file).readlines()]
-#     valves = {}
-#     for line in lines:
-#         name = line.split('Valve ')[1][:2]
-#         flowRate = int(line.split('=')[1].split(';')[0])
-#         nexts = line.split('valves ')[1]#all of the connecting tunnels
-#         nexts = [nexts.split(', ')]
-#         if nexts[0][1] == 'x':
-#             nexts[0].pop(1)
-#         nexts = nexts[0]
-#         opened = flowRate == 0
-#         valves[name] = Valve(name, flowRate, nexts, opened)
-#         print(f"new valve: {name} with flow: {flowRate} and connected valves: {nexts}")
+def process(file):
+    lines = [l.strip() for l in open(file).readlines()]
+    valves = {}
+    for line in lines:
+        name = line.split('Valve ')[1][:2]
+        flowRate = int(line.split('=')[1].split(';')[0])
+        nexts = line.split('valves ')[1]#all of the connecting tunnels
+        nexts = [nexts.split(', ')]
+        if nexts[0][1] == 'x':
+            nexts[0].pop(1)
+        nexts = nexts[0]
+        opened = flowRate == 0
+        valves[name] = Valve(name, flowRate, nexts, opened)
+        print(f"new valve: {name} with flow: {flowRate} and connected valves: {nexts}")
 
-#     print(valves.keys())
-#     return valves
+    print(valves.keys())
+    return valves
 
-# # def getBetPath(valves, start, currPressure, minsLeft):
-# #     print(f"GBP, start: {start.getName()}, pressure: {currPressure}, minsLeft: {minsLeft}")
-# #     connecteds = start.getNexts()
-# #     print(connecteds)
-# #     if minsLeft == 0:
-# #         return currPressure # should compare currPressure to 
-# #     else:
-    
-# #         maxPressure = 0
-# #         for node in connecteds: #does not avoid loops
-
-# #             if valves[node].checkOpen() or minsLeft <= 1: #if the traveling node is open or 0
-# #                 print("reachedOpened")
-# #                 pressure = getBestPath(valves, valves[node], currPressure, minsLeft - 1) #travels to node and finds best path from that one
-# #             else: #if the node that you're traveling to has a flow rate
-                
-# #                 currPressure = currPressure + (valves[node].getFlow() * (minsLeft - 2))
-# #                 print(f"reachedClosed, currPressure {currPressure}")
-# #                 valves[node].setValve(True)
-# #                 pressure = getBestPath(valves, valves[node], currPressure, minsLeft - 2)
-# #                 valves[node].setValve(False)
-# #             if pressure > maxPressure:
-# #                 maxPressure = pressure
-# #                 print(f"max: {maxPressure}")
-# #         return maxPressure
-
-# def getBestPath(valves, start, currPressure, minsLeft):
-    
-#     # print(f"GBP, start: {start.getName()}, pressure: {currPressure}, minsLeft: {minsLeft}")
+# def getBetPath(valves, start, currPressure, minsLeft):
+#     print(f"GBP, start: {start.getName()}, pressure: {currPressure}, minsLeft: {minsLeft}")
 #     connecteds = start.getNexts()
-#     # print(connecteds)
-#     didIOpen = False
-#     if minsLeft >= 1 and not start.checkOpen():
-#         didIOpen = True
-#         # print(f"valve setting: {start.getName()}, setting to: {didIOpen}")
-#         start.setValve(True)
-#         minsLeft = minsLeft - 1
-#         # print(f"flow: {start.getFlow()}, minsLeft: {minsLeft}")
-#         currPressure = currPressure + (start.getFlow() * (minsLeft))
+#     print(connecteds)
+#     if minsLeft == 0:
+#         return currPressure # should compare currPressure to 
+#     else:
     
-#     if minsLeft  <= 1:
-#         return currPressure
+#         maxPressure = 0
+#         for node in connecteds: #does not avoid loops
+
+#             if valves[node].checkOpen() or minsLeft <= 1: #if the traveling node is open or 0
+#                 print("reachedOpened")
+#                 pressure = getBestPath(valves, valves[node], currPressure, minsLeft - 1) #travels to node and finds best path from that one
+#             else: #if the node that you're traveling to has a flow rate
+                
+#                 currPressure = currPressure + (valves[node].getFlow() * (minsLeft - 2))
+#                 print(f"reachedClosed, currPressure {currPressure}")
+#                 valves[node].setValve(True)
+#                 pressure = getBestPath(valves, valves[node], currPressure, minsLeft - 2)
+#                 valves[node].setValve(False)
+#             if pressure > maxPressure:
+#                 maxPressure = pressure
+#                 print(f"max: {maxPressure}")
+#         return maxPressure
+
+def getBestPath(valves, start, currPressure, minsLeft):
     
-#     else: 
-#         maxP = 0
-#         for node in connecteds:
-#             pressure = getBestPath(valves, valves[node], currPressure, minsLeft - 1)
-#             if pressure > maxP:
-#                 maxP = pressure
-#                 print(maxP)
+    # print(f"GBP, start: {start.getName()}, pressure: {currPressure}, minsLeft: {minsLeft}")
+    connecteds = start.getNexts()
+    # print(connecteds)
+    didIOpen = False
+    if minsLeft >= 1 and not start.checkOpen():
+        didIOpen = True
+        # print(f"valve setting: {start.getName()}, setting to: {didIOpen}")
+        start.setValve(True)
+        minsLeft = minsLeft - 1
+        # print(f"flow: {start.getFlow()}, minsLeft: {minsLeft}")
+        currPressure = currPressure + (start.getFlow() * (minsLeft))
+    
+    if minsLeft  <= 1:
+        return currPressure
+    
+    else: 
+        maxP = 0
+        for node in connecteds:
+            pressure = getBestPath(valves, valves[node], currPressure, minsLeft - 1)
+            if pressure > maxP:
+                maxP = pressure
+                print(maxP)
         
-#         didIOpen = False
-#         # print(f"valve setting: {start.getName()}, setting to: {didIOpen}")
-#         start.setValve(didIOpen) #Closes the valve afterwards
+        didIOpen = False
+        # print(f"valve setting: {start.getName()}, setting to: {didIOpen}")
+        start.setValve(didIOpen) #Closes the valve afterwards
         
-#         return maxP
+        return maxP
 
 
 
-# def solvePart1(valves, mins):
-#     return getBestPath(valves, valves['AA'], 0, mins)
-#     #I currently have a dictionary with valves and their connecting valves
-#     return True
+def solvePart1(valves, mins):
+    return getBestPath(valves, valves['AA'], 0, mins)
+    #I currently have a dictionary with valves and their connecting valves
+    return True
 
-# def solvePart2(file):
-#     return True
+def solvePart2(file):
+    return True
 
 
-# def solve(file):
-#     networks = process(file)
-#     print(f"Part 1: {solvePart1(networks, 6)}")
-#     print(f"Part 2: {solvePart2(networks)}")
+def solve(file):
+    networks = process(file)
+    print(f"Part 1: {solvePart1(networks, 6)}")
+    print(f"Part 2: {solvePart2(networks)}")
 
-# solve("input/16/input1.txt")
+solve("input/16/input1.txt")
 
 
 
@@ -259,88 +259,3 @@
 
 # solve("input/16/input1.txt")
 
-
-
-
-from math import inf as INFINITY
-from functools import partial
-from operator import itemgetter
-from itertools import combinations, product
-from collections import defaultdict
-
-from utils import advent
-
-def floyd_warshall(g):
-	distance = defaultdict(lambda: defaultdict(lambda: INFINITY))
-
-	for a, bs in g.items():
-		distance[a][a] = 0
-
-		for b in bs:
-			distance[a][b] = 1
-			distance[b][b] = 0
-
-	for a, b, c in product(g, g, g):
-		bc, ba, ac = distance[b][c], distance[b][a], distance[a][c]
-
-		if ba + ac < bc:
-			distance[b][c] = ba + ac
-
-	return distance
-
-def score(rates, valves):
-	s = 0
-	for v, t in valves.items():
-		s += rates[v] * t
-	return s
-
-def solutions(distance, rates, valves, time=30, cur='AA', chosen={}):
-	for nxt in valves:
-		new_time = time - distance[cur][nxt] - 1
-		if new_time < 2:
-			continue
-
-		new_chosen = chosen | {nxt: new_time}
-		yield from solutions(distance, rates, valves - {nxt}, new_time, nxt, new_chosen)
-
-	yield chosen
-
-
-advent.setup(2022, 16)
-
-from utils.timer import timer_start
-timer_start()
-
-graph = defaultdict(list)
-rates = {}
-
-with advent.get_input() as fin:
-	for fields in map(str.split, fin):
-		src  = fields[1]
-		dsts = list(map(lambda x: x.rstrip(','), fields[9:]))
-		rate = int(fields[4][5:-1])
-
-		rates[src] = rate
-
-		for dst in dsts:
-			graph[src].append(dst)
-
-good     = frozenset(filter(rates.get, graph))
-distance = floyd_warshall(graph)
-score    = partial(score, rates)
-best     = max(map(score, solutions(distance, rates, good)))
-
-advent.print_answer(1, best)
-
-
-maxscore = defaultdict(int)
-
-for solution in solutions(distance, rates, good, 26):
-	k = frozenset(solution)
-	s = score(solution)
-
-	if s > maxscore[k]:
-		maxscore[k] = s
-
-best = max(sa + sb for (a, sa), (b, sb) in combinations(maxscore.items(), 2) if not a & b)
-advent.print_answer(2, best)
