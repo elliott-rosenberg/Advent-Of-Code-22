@@ -101,11 +101,17 @@ class PlusRock:
                         self.chamber.pop(0)
 
     def moveLeft(self):
-        if not isEmpty(self.chamber, self.currRow+1, self.currCol-1):
+        # print(self.chamber[self.currRow+2][self.currCol])
+        # print(isEmpty(self.chamber, self.currRow+2, self.currCol))
+        if not (isEmpty(self.chamber, self.currRow+1, self.currCol-1)):
             return False
-        else: 
-            self.currCol -= 1
-            return True
+
+        if not (isEmpty(self.chamber, self.currRow+2, self.currCol)):
+            return False
+
+        # print("reached3")
+        self.currCol -= 1
+        return True
 
     def moveRight(self):
         if not isEmpty(self.chamber, self.currRow+1, self.currCol+3):
@@ -117,9 +123,14 @@ class PlusRock:
     def moveDown(self):
         if not isEmpty(self.chamber, self.currRow+3, self.currCol + 1):
             return False
-        else: 
-            self.currRow += 1
-            return True
+
+        if not isEmpty(self.chamber, self.currRow+2, self.currCol):
+            return False
+        
+        if not isEmpty(self.chamber, self.currRow+2, self.currCol+2):
+            return False
+        self.currRow += 1
+        return True
 
 
 class LRock:
@@ -298,13 +309,13 @@ def solvePart1(jets, numRocks):
                 rock.moveRight()
             isFalling = rock.moveDown()
             ind += 1
-            print(f"direction: {jetDir}, jetInd: {ind}, isFalling? {isFalling}")
-            #print(ind % len(jets))
-            printCurr(rock)
+            # print(f"direction: {jetDir}, jetInd: {ind}, isFalling? {isFalling}")
+            # print(ind % len(jets))
+            # printCurr(rock)
         #no longer falling, has found its spot
         highest = max(highest, len(rock.chamber)-(rock.currRow)-1)
         rock.add('#')
-        print(f"highest: {highest}")
+        # print(f"highest: {highest}")
         chamber = rock.chamber
         printChamber(chamber)
     return highest
@@ -327,7 +338,8 @@ def solvePart2(file):
 
 def solve(file):
     jets = process(file)
-    print(f"Part 1: {solvePart1(jets, 20)}")
+    print(f"Part 1: {solvePart1(jets, 2022)}")
     #print(f"Part 2: {solvePart2(jets)}")
 
 solve("input/17/input1.txt")
+
